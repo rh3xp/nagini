@@ -21,6 +21,8 @@ def exec_function(user_input):
 
 def exec_user_input(i, user_input, user_globals):
 
+    user_globals = user_globals.copy()
+
     try:
         retval = exec_function(user_input)(
                 user_input, user_globals
@@ -32,12 +34,16 @@ def exec_user_input(i, user_input, user_globals):
         if retval is not None:
             print('Out [%d]: %s' % (i, retval))
 
+    return user_globals
+
 def main():
 
     user_globals = {}
 
     for i, user_input in get_user_input():
-        exec_user_input(i, user_input, user_globals)
+        user_globals = exec_user_input(
+                i, user_input, user_globals
+            )
 
 if __name__ == '__main__':
     main()
